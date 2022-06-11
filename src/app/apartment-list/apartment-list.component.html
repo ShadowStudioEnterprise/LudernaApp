@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg pb-5 pt-5">
+        <h2>Lista de Apartamentos</h2>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col-sm-4"  *ngFor="let apartment of apartmentsList">
+      <img [src]="getImg(apartment)" class="card-img-top" [alt]="getImg(apartment)">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{apartment.name}}</h5>
+          <a [routerLink]="apartment.id" class="btn btn-primary btn-color">Go</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

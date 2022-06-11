@@ -1,0 +1,22 @@
+.table {
+  margin-right: 100px;
+  display: table;
+  width: 175px;
+  border: 1px solid #073f55;
+}
+
+.table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+
+.table-col {
+  float: left;
+  display: table-column;
+  width: 100%;
+  border: 0.5px solid #073f55;
+}
+.title{
+  font-weight: bold;
+}

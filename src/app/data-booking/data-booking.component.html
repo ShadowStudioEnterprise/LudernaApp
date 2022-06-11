@@ -1,0 +1,28 @@
+<div class="no-style" style="margin-left: 4px">
+  <div class="container">
+    <h2>Datos de la reserva</h2>
+    <form [formGroup]="formDataBooking" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="dayStart">Fecha de inicio</label>
+        <input type="date" class="form-control" [min]="today" id="dayStart" name="dayStart" formControlName="dayStart"
+          [(ngModel)]="model.dayStart" required>
+      </div>
+      <div class="form-group">
+        <label for="dayEnd">Fecha de Fin</label>
+        <input type="date" class="form-control" [min]="today" id="dayEnd" name="dayEnd" formControlName="dayEnd"
+          [(ngModel)]="model.dayEnd" required>
+      </div>
+      <div class="form-group">
+        <label for="adults">Adultos</label>
+        <input type="number" class="form-control" id="adults" name="adults" [min]="1" [max]="100"
+          formControlName="adults" [(ngModel)]="model.adults" required>
+      </div>
+      <div class="form-group">
+        <label for="children">Niños</label>
+        <input type="number" class="form-control " id="children" name="children" [min]="0" formControlName="children"
+          [(ngModel)]="model.children">
+      </div>
+      <button type="submit" class="btn btn-success btn-color mt-4">Save</button>
+
+    </form>
+  </div>
