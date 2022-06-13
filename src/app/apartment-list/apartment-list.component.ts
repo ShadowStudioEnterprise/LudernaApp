@@ -19,7 +19,6 @@ export class ApartmentListComponent implements OnInit {
   }
 
   getImg(obj: Apartments): string {
-    console.log(obj.id)
     if (typeof obj.id == "string"){
       return apartments[this.getIndex(+obj.id)].media?.gallery[0].size1.src;
     }

@@ -4,3 +4,8 @@
 h2{
   padding-bottom: 100px;
 }
+.buttonB{
+  width: 100px;
+  background-color: #c2ce30;
+  border-color: #c2ce30;
+}

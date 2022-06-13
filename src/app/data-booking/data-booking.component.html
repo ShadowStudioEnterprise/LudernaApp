@@ -1,7 +1,7 @@
 <div class="no-style" style="margin-left: 4px">
   <div class="container">
     <h2>Datos de la reserva</h2>
-    <form [formGroup]="formDataBooking" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formDataBooking" (change)="onSubmit()">
       <div class="form-group">
         <label for="dayStart">Fecha de inicio</label>
         <input type="date" class="form-control" [min]="today" id="dayStart" name="dayStart" formControlName="dayStart"
@@ -22,7 +22,5 @@
         <input type="number" class="form-control " id="children" name="children" [min]="0" formControlName="children"
           [(ngModel)]="model.children">
       </div>
-      <button type="submit" class="btn btn-success btn-color mt-4">Save</button>
-
     </form>
   </div>

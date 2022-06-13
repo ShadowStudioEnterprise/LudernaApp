@@ -1,34 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, NgModule } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
 import apartments from '../../assets/apartments.json';
 import moment from 'moment';
-import { DataBooking, DataUserBooking } from '../booking';
+import { Booking, DataBooking, DataPlaceBooking, DataUserBooking } from '../booking';
+import { BookingService } from '../booking.service';
 
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css']
 })
+
+
 export class BookingComponent implements OnInit {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'my-auth-token'
+    })
+  };
 
   dataBookings!: DataBooking;
   dataUserBookings!: DataUserBooking;
+  booking!: Booking;
   max_guests: number = 0;
   apartmentId: number = -1;
-  constructor(private route: ActivatedRoute,) { }
-  name: string ="";
-  town: string ="";
-  location:string ="";
+  constructor(private route: ActivatedRoute, private bookingService: BookingService, private router: Router) { }
+  name: string = "";
+  town: string = "";
+  location: string = "";
 
   addItem(dataBooking: DataBooking) {
     this.dataBookings = dataBooking;
-    console.log(this.calculatePrices(this.apartmentId, this.dataBookings))
   }
 
-  addUserData(userData: DataUserBooking){
+  addUserData(userData: DataUserBooking) {
     this.dataUserBookings = userData;
   }
-  onSubmit():void{
+  onSubmit(): void {
+    if (this.dataBookings && this.dataUserBookings) {
+      if (this.validate(this.max_guests, this.dataBookings)&& this.validateDates(this.apartmentId, this.dataBookings)) {
+        let place = new DataPlaceBooking(this.name, this.town, this.location)
+        this.booking = new Booking(this.dataUserBookings, this.dataBookings, place, this.calculatePrices(this.apartmentId, this.dataBookings));
+        this.bookingService.setBooking(this.booking);
+        this.router.navigate(['/payments']);
+      }else{
+        if(this.validate(this.max_guests, this.dataBookings)){
+            alert("Maximo permitido sobrepasado")
+        }
+        if (this.validateDates(this.apartmentId, this.dataBookings)) {
+          alert("Algun dia no esta disponible")
+        }
+      }
+    }
+    else {
+      alert("faltan datos")
+    }
 
   }
 
@@ -39,10 +67,7 @@ export class BookingComponent implements OnInit {
     this.max_guests = apartments[this.apartmentId].booking_data.max_guests;
     this.name = apartments[this.apartmentId].name;
     this.town = apartments[this.apartmentId].location.town;
-    this.location = apartments[this.apartmentId].location.map.lat +","+apartments[this.apartmentId].location.map.lng;
-    console.log(apartments[this.apartmentId].booking_data.cleaning_fee)
-    // console.log(apartments[apartmentId].booking_data.daily_breakdown["2022-06-01"].available)
-
+    this.location = apartments[this.apartmentId].location.map.lat + "," + apartments[this.apartmentId].location.map.lng;
   }
   getIndex(number: number): number {
     for (let i in apartments) {
@@ -53,10 +78,9 @@ export class BookingComponent implements OnInit {
     return -1;
   }
   validate(max: number, data: DataBooking): boolean {
-    if (max > data.adults + data.children) return false
-    else {
-      return true
-    }
+    if (max > data.adults + data.children) return true
+    else return false
+
   }
   validateDates(id: number, data: DataBooking): boolean {
     const start = new Date(data.dayStart);
@@ -64,13 +88,12 @@ export class BookingComponent implements OnInit {
     let keys = Object.entries(apartments[id].booking_data.daily_breakdown);
     let loop = new Date(start);
     while (loop <= end) {
-      console.log(loop);
-      let newDate = loop.setDate(loop.getDate() + 1);
-      let str: string = "" + moment(new Date(newDate)).format('YYYY-MM-DD');
+      let str: string = "" + moment(loop).format('YYYY-MM-DD');
       for (let key of keys) {
         if (key[0] == str)
           if (key[1].available == false) return false
       }
+      loop.setDate(loop.getDate() + 1);
     }
     return true;
   }
@@ -82,12 +105,9 @@ export class BookingComponent implements OnInit {
     let prizeAcc = apartments[id].booking_data.cleaning_fee;
     let countNight = 0;
     while (loop <= end) {
-      console.log(loop);
-
       let str: string = "" + moment(new Date(loop)).format('YYYY-MM-DD');
       for (let key of keys) {
         if (key[0] == str) {
-          console.log(key[1].night_price);
           prizeAcc += key[1].night_price;
           countNight++;
         }

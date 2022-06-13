@@ -24,7 +24,6 @@ export class DataUserBookingComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<DataUserBooking>();
 
   onSubmit() {
-    this.submitted = true;
     /* this.datos = `name=${this.formDataUserBooking.value.name},
                 surname=${this.formDataUserBooking.value.surname},
                 email=${this.formDataUserBooking.value.email},

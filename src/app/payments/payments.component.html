@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="row">
+    <div class="col lg">
+      <form>
+        <div class="row">
+          <div class="col-lg-2">
+            <fa-icon [icon]="faPayPal"></fa-icon>
+          </div>
+          <div class="col-lg form-check">
+            <input type="radio" name="payment" class="form-check-input" id="paypal" (click)="hasChecked()">
+            <label class="form-check-label" for="paypal" >
+              PayPal
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2">
+            <fa-icon [icon]="faCreditCard"></fa-icon>
+          </div>
+          <div class="col-lg form-check">
+            <input type="radio" name="payment" class="form-check-input" id="creditcard" (click)="hasChecked()">
+            <label class="form-check-label" for="creditcard">
+              Tarjeta de credito
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2">
+            <fa-icon [icon]="faPhone"></fa-icon>
+          </div>
+          <div class="col-lg form-check">
+            <input type="radio" name="payment" class="form-check-input" id="phone" (click)="hasChecked()">
+            <label class="form-check-label" for="phone">
+              Telefono
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2">
+            <fa-icon [icon]="faWallet"></fa-icon>
+          </div>
+          <div class="col-lg form-check"><input type="radio" name="payment" class="form-check-input" id="wallet" (click)="hasChecked()">
+            <label class="form-check-label" for="wallet">
+              Wallet
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col lg">
+      <div class="table">
+        <div class="table-row">
+          <div class="table-col p-2 ">{{ dataUser.name}}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-col p-2">
+            {{dataUser.surname}}
+          </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2 ">{{dataUser.email}} </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2">
+            {{dataUser.phone}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col lg">
+      <div class="table">
+        <div class="table-row">
+          <div class="table-col p-2 title">Apartamento</div>
+        </div>
+        <div class="table-row">
+          <div class="table-col p-2">
+            {{placeBoking.name}}
+          </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2 title">Pueblo </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2">
+            {{placeBoking.town}}
+          </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2 title"><a [href]="'https://www.google.com/maps/place/'+placeBoking.location">Mapa</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="col lg">
+      <button class="btn btn-success btn-color mb-4" (click)="end()">Finalizar</button>
+      <div class="table">
+        <div class="table-row">
+          <div class="table-col p-2 title">Coste Reserva</div>
+        </div>
+        <div class="table-row">
+          <div class="table-col p-2">
+            {{prize}}
+          </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2 title">Coste </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2">
+            {{prize}}
+          </div>
+        </div>
+        <div class="table-row ">
+          <div class="table-col p-2 title">Coste con tasa </div>
+        </div>
+        <div class="table-row ">
+          {{prize}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

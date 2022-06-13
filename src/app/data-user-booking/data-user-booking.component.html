@@ -1,7 +1,7 @@
 <div class="no-style" style="margin-left: 4px">
   <div class="container">
     <h2>Datos del usuario</h2>
-    <form [formGroup]="formDataUserBooking" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formDataUserBooking" (change)="onSubmit()">
       <div class="form-group">
         <label for="name">Nombre</label>
         <input type="text" class="form-control" id="name" name="name" formControlName="name"
@@ -14,16 +14,14 @@
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" [min]="1" [max]="100"
+        <input type="email" class="form-control" id="email" name="email"
           formControlName="email" [(ngModel)]="model.email" required>
       </div>
       <div class="form-group">
         <label for="phone">Movil</label>
-        <input type="tel" class="form-control" id="phone" name="phone" [min]="0" formControlName="phone"
+        <input type="tel" class="form-control" id="phone" name="phone"  formControlName="phone"
           [(ngModel)]="model.phone">
       </div>
-      <button type="submit" class="btn btn-success btn-color mt-4">Save</button>
-
     </form>
   </div>
 
